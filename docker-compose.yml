@@ -1,0 +1,15 @@
+version: '3.9'
+
+services:
+  armbian-build:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/armbian
+    environment:
+      - ARMBIAN_RUNNING_IN_CONTAINER=yes
+    command: /bin/bash -c "git clone https://github.com/NeoDeveloperz/userpatches_armbian.git userpatches'; chmod 777 -R userpatches'; /armbian/compile.sh BOARD=bananapim2ultra BRANCH=current RELEASE=noble BUILD_MINIMAL=no BUILD_DESKTOP=no KERNEL=yes KERNEL_DEFAULT=yes KERNEL_CONFIGURE=no"
+
+volumes:
+  armbian:
